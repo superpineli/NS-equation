@@ -64,7 +64,7 @@
         .card:active { transform: scale(0.97); }
         .formula-card { background: #e0f2fe; border-color: #7dd3fc; color: #0369a1; }
 		.formula-card .katex { font-size: 1.5em; }
-        .meaning-card { background: #fef3c7; border-color: #fcd34d; color: #92400e; font-size: 1.2em; }
+        .meaning-card { background: #fef3c7; border-color: #fcd34d; color: #92400e; font-size: 1.em; }
         .card.selected {
             border-color: #9333ea !important; background: #f3e8ff !important; color: #6b21a8 !important;
             transform: scale(1.04); box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.2); z-index: 2;
@@ -168,21 +168,19 @@
     <script>
         const gameData = [
             { id: 1, text: "\\frac{\\partial u}{\\partial t}", pairId: 1, type: "formula" }, 
-            { id: 2, text: "时变加速度项", pairId: 1, type: "meaning" },
-            { id: 3, text: "u\\frac{\\partial u}{\\partial x}", pairId: 2, type: "formula" }, 
-            { id: 4, text: "纬向平流加速度项", pairId: 2, type: "meaning" },
+            { id: 2, text: "时变项", pairId: 1, type: "meaning" },
+            { id: 3, text: "u\\frac{\\partial u}{\\partial x}+v\\frac{\\partial u}{\\partial y}+w\\frac{\\partial u}{\\partial z}", pairId: 2, type: "formula" }, 
+            { id: 4, text: "非惯性平流项", pairId: 2, type: "meaning" },
             { id: 5, text: "fv", pairId: 3, type: "formula" }, 
             { id: 6, text: "科氏力项1（较大）", pairId: 3, type: "meaning" },
             { id: 7, text: "-\\frac{1}{\\rho}\\frac{\\partial p}{\\partial x}", pairId: 4, type: "formula" }, 
             { id: 8, text: "压强梯度力项", pairId: 4, type: "meaning" },
-            { id: 9, text: "A_l \\nabla^2 u", pairId: 5, type: "formula" }, 
+            { id: 9, text: "A_l (\\frac{\\partial^2 u}{\\partial x^2}+\\frac{\\partial^2 u}{\\partial y^2})", pairId: 5, type: "formula" }, 
             { id: 10, text: "水平湍摩擦力项", pairId: 5, type: "meaning" },
             { id: 11, text: "A_z \\frac{\\partial^2 u}{\\partial z^2}", pairId: 6, type: "formula" }, 
-            { id: 12, text: "垂向湍摩擦力项", pairId: 6, type: "meaning" },
+            { id: 12, text: "铅直湍摩擦力项", pairId: 6, type: "meaning" },
             { id: 13, text: "-f \\cot \\varphi w", pairId: 7, type: "formula" }, 
-            { id: 14, text: "科氏力项2（较小）", pairId: 7, type: "meaning" },
-            { id: 15, text: "v\\frac{\\partial u}{\\partial y}", pairId: 8, type: "formula" }, 
-            { id: 16, text: "经向平流加速度项", pairId: 8, type: "meaning" }
+            { id: 14, text: "科氏力项2（较小）", pairId: 7, type: "meaning" }
         ];
 
         class EkmanGame {
@@ -338,7 +336,7 @@
                     this.score += 100; this.matchedPairs++;
                     this.selectedCards = [];
                     this.updateUI();
-                    if (this.matchedPairs === 8) setTimeout(() => this.gameWin(), 400);
+                    if (this.matchedPairs === 7) setTimeout(() => this.gameWin(), 400);
                     this.isLocked = false;
                 } else {
                     card1.classList.add('error'); card2.classList.add('error');
@@ -368,7 +366,7 @@
 
             updateUI() {
                 document.getElementById('score').textContent = this.score;
-                document.getElementById('matches').textContent = `${this.matchedPairs}/8`;
+                document.getElementById('matches').textContent = `${this.matchedPairs}/7`;
             }
 
             gameWin() {
